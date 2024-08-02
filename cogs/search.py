@@ -3,6 +3,9 @@ from discord.ext import commands
 import asyncio
 from bs4 import BeautifulSoup
 import requests
+import random
+import csv
+import sys
 
 class helpc(commands.Cog):
     def __init__(self, bot):
@@ -44,6 +47,22 @@ class helpc(commands.Cog):
         links = soup.find_all('a', {'class': 'v-btn v-btn--slim v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text join-btn bottom-btn__inner'})[0]
         href = links.get('href')
         await ctx.send(href)
+
+    @search.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def rafi(self, ctx):
+        try:
+            lists = []
+            filename = 'data/malnet.csv'
+            with open(filename, encoding='utf8', newline='') as f:
+                csvreader = csv.reader(f)
+                for row in csvreader:
+                    lists.append(row[1])
+
+            embed=discord.Embed(title="とても危険なサイト", url=f"{random.choice(lists)}", description="このサイトはとても危険です。\nアクセスする際は自己責任でお願いします。\n(リンク切れかも。。)")
+            await ctx.send(embed=embed)
+        except:
+            await ctx.send(f"{sys.exc_info()}")
 
 async def setup(bot):
     await bot.add_cog(helpc(bot))
