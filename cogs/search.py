@@ -59,7 +59,7 @@ class helpc(commands.Cog):
                 for row in csvreader:
                     lists.append(row[1])
 
-            embed=discord.Embed(title="とても危険なサイト", url=f"{random.choice(lists)}", description="このサイトはとても危険です。\nアクセスする際は自己責任でお願いします。\n(リンク切れかも。。)")
+            embed=discord.Embed(title=f"とても危険なサイト\nURL-> {random.choice(lists).replace("http", "ht0p")}", description="このサイトはとても危険です。\nアクセスする際は自己責任でお願いします。\n(リンク切れかも。。)")
             await ctx.send(embed=embed)
         except:
             await ctx.send(f"{sys.exc_info()}")
