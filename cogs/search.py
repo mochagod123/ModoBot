@@ -23,6 +23,11 @@ class helpc(commands.Cog):
 
     @search.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def ggrks(self, ctx, a: str):
+        await ctx.send(f"http://ggrks.atspace.tv/?{a.replace("@", "＠")}")
+
+    @search.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def amazon(self, ctx, a: str):
         await ctx.send(f"https://www.amazon.co.jp/s?k={a.replace("@", "＠")}")
 
