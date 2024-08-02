@@ -14,7 +14,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from pyshorteners import Shortener
-import tweepy
+from googletrans import Translator
 
 def download_bytesio(url):
     ydl_opts = {
@@ -132,6 +132,17 @@ class Tools(commands.Cog):
     async def qrcode(self, ctx, num: str):
         try:
             await ctx.reply(f"https://api.qrserver.com/v1/create-qr-code/?data={num.replace("@", "")}&size=100x100")
+        except:
+            await ctx.send(f"Error!\n{sys.exc_info()}")
+
+    @tools.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def trans(self, ctx, num: str):
+        try:
+            translator = Translator()
+            translated = translator.translate(num, src='ja', dest='en')
+            embed = discord.Embed(title=f"{num}の翻訳結果", description=f"{translated.text}")
+            await ctx.reply(embed=embed)
         except:
             await ctx.send(f"Error!\n{sys.exc_info()}")
 

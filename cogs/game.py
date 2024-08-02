@@ -5,6 +5,7 @@ import asyncio
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps, ImageEnhance
 import io
 import sys
+from googletrans import Translator
 
 class Game(commands.Cog):
     def __init__(self, bot):
@@ -67,6 +68,34 @@ class Game(commands.Cog):
         embed.add_field(name="変換前", value=f"{text.replace("@", "＠")}", inline=False)
         embed.add_field(name="変換後", value=f"{text.replace("\\n", "\n").replace("@", "＠")}", inline=False)
         await ctx.reply(embed=embed)
+
+    @games.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def loop_trans(self, ctx, text: str):
+        try:
+            translator = Translator()
+            jpen = translator.translate(text, src='ja', dest='en')
+            enfr = translator.translate(jpen.text, src='en', dest='fr')
+            frch = translator.translate(enfr.text, src='fr', dest='zh-cn')
+            chjp = translator.translate(frch.text, src='zh-cn', dest='ja')
+            c = discord.Embed(title=f"{text}", description=f"JP->EN->FR->ZH->JP")
+            msg = await ctx.send(embed=c)
+            await asyncio.sleep(2)
+            v = discord.Embed(title=f"{jpen.text}", description=f"JP->EN->FR->ZH->JP")
+            await msg.edit(embed=v)
+            await asyncio.sleep(2)
+            a = discord.Embed(title=f"{enfr.text}", description=f"JP->EN->FR->ZH->JP")
+            await msg.edit(embed=a)
+            await asyncio.sleep(2)
+            c = discord.Embed(title=f"{frch.text}", description=f"JP->EN->FR->ZH->JP")
+            await msg.edit(embed=c)
+            await asyncio.sleep(2)
+            s = discord.Embed(title=f"{chjp.text}", description=f"JP->EN->FR->ZH->JP")
+            await msg.edit(embed=s)
+            await asyncio.sleep(2)
+            await ctx.reply("LoopTransが終了しました。")
+        except:
+            await ctx.send(f"Error!\n{sys.exc_info()}")
 
 async def setup(bot):
     await bot.add_cog(Game(bot))

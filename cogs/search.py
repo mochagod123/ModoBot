@@ -3,9 +3,6 @@ from discord.ext import commands
 import asyncio
 from bs4 import BeautifulSoup
 import requests
-import random
-import csv
-import sys
 
 class helpc(commands.Cog):
     def __init__(self, bot):
@@ -26,11 +23,6 @@ class helpc(commands.Cog):
 
     @search.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def ggrks(self, ctx, *, a):
-        await ctx.send(f"http://ggrks.atspace.tv/?{a.replace("@", "＠").replace(" ", "+")}")
-
-    @search.command()
-    @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def amazon(self, ctx, a: str):
         await ctx.send(f"https://www.amazon.co.jp/s?k={a.replace("@", "＠")}")
 
@@ -41,19 +33,12 @@ class helpc(commands.Cog):
 
     @search.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def rafi(self, ctx):
-        try:
-            lists = []
-            filename = 'data/malnet.csv'
-            with open(filename, encoding='utf8', newline='') as f:
-                csvreader = csv.reader(f)
-                for row in csvreader:
-                    lists.append(row[1])
-
-            embed=discord.Embed(title=f"とても危険なサイト\nURL-> {random.choice(lists).replace("http", "ht0p")}", description="このサイトはとても危険です。\nアクセスする際は自己責任でお願いします。\n(リンク切れかも。。)")
-            await ctx.send(embed=embed)
-        except:
-            await ctx.send(f"{sys.exc_info()}")
+    async def server(self, ctx, a: str):
+        response = requests.get(f"https://dissoku.net/ja/search/result?q={a}&page=1")
+        soup = BeautifulSoup(response.text, 'html.parser')
+        links = soup.find_all('a', {'class': 'v-btn v-btn--slim v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text join-btn bottom-btn__inner'})[0]
+        href = links.get('href')
+        await ctx.send(href)
 
 async def setup(bot):
     await bot.add_cog(helpc(bot))
