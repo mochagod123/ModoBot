@@ -1,0 +1,44 @@
+import discord
+from discord.ext import commands
+import asyncio
+from bs4 import BeautifulSoup
+import requests
+
+class helpc(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.group(invoke_without_command=True)
+    async def search(self,ctx):
+        e = discord.Embed(title="サブコマンドがないです!", description="このメッセージは、\n5秒後に削除されます。")
+        msg = await ctx.reply(embed=e)
+        await ctx.message.delete()
+        await asyncio.sleep(5)
+        await msg.delete()
+
+    @search.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def google(self, ctx, a: str):
+        await ctx.send(f"https://www.google.co.jp/search?q={a.replace("@", "＠")}")
+
+    @search.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def amazon(self, ctx, a: str):
+        await ctx.send(f"https://www.amazon.co.jp/s?k={a.replace("@", "＠")}")
+
+    @search.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def safeweb(self, ctx, a: str):
+        await ctx.send(f"分析結果: \nhttps://safeweb.norton.com/report?url={a.replace("@", "＠")}")
+
+    @search.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def server(self, ctx, a: str):
+        response = requests.get(f"https://dissoku.net/ja/search/result?q={a}&page=1")
+        soup = BeautifulSoup(response.text, 'html.parser')
+        links = soup.find_all('a', {'class': 'v-btn v-btn--slim v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text join-btn bottom-btn__inner'})[0]
+        href = links.get('href')
+        await ctx.send(href)
+
+async def setup(bot):
+    await bot.add_cog(helpc(bot))

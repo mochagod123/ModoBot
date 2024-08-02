@@ -1,0 +1,26 @@
+{
+    "BotName": "InnuSama",
+    "Uranai": {
+        "Daikiti": "Daikiti",
+        "Chukiti": "Chukiti",
+        "Kiti": "Kiti",
+        "Suekiti": "Suekiti",
+        "Kyou": "Kyou",
+        "Daikyo": "Daikyo"
+    },
+    "UserSearch": {
+        "Title": "UserInfo",
+        "Name": "Name",
+        "Nick": "Nick",
+        "Mute": "Are you muted?",
+        "Akaunto": "Account creation date",
+        "Unsei": "This person's fortune"
+    },
+    "YesNo": {
+        "Yes": "Yes",
+        "No": "No"
+    },
+    "GChat": {
+        "Message": "Message"
+    }
+}

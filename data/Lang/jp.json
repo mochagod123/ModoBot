@@ -1,0 +1,26 @@
+{
+    "BotName": "インヌ様",
+    "Uranai": {
+        "Daikiti": "大吉",
+        "Chukiti": "中吉",
+        "Kiti": "吉",
+        "Suekiti": "末吉",
+        "Kyou": "凶",
+        "Daikyo": "大凶"
+    },
+    "UserSearch": {
+        "Title": "ユーザー情報",
+        "Name": "名前",
+        "Nick": "ニックネーム",
+        "Mute": "ミュートされてるか?",
+        "Akaunto": "アカウント作成日時",
+        "Unsei": "この人の運勢"
+    },
+    "YesNo": {
+        "Yes": "はい",
+        "No": "いいえ"
+    },
+    "GChat": {
+        "Message": "メッセージ"
+    }
+}
