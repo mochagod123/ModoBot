@@ -62,7 +62,8 @@ async def on_command_error(ctx, err):
         embed=discord.Embed(title="あなたの権限がありません!", description=f"{p}", color=0xff0000)
         await ctx.send(embed=embed)
     elif isinstance(err, commands.errors.MissingRequiredArgument ):
-        await ctx.send("引数が足りないよ！")
+        embed=discord.Embed(title="引数が足りないよ！", color=0xff0000)
+        await ctx.send(embed=embed)
 
 @bot.event
 async def setup_hook():
