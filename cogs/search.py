@@ -41,15 +41,6 @@ class helpc(commands.Cog):
 
     @search.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def server(self, ctx, a: str):
-        response = requests.get(f"https://dissoku.net/ja/search/result?q={a}&page=1")
-        soup = BeautifulSoup(response.text, 'html.parser')
-        links = soup.find_all('a', {'class': 'v-btn v-btn--slim v-theme--dark v-btn--density-default v-btn--size-default v-btn--variant-text join-btn bottom-btn__inner'})[0]
-        href = links.get('href')
-        await ctx.send(href)
-
-    @search.command()
-    @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def rafi(self, ctx):
         try:
             lists = []
