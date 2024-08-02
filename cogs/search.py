@@ -23,8 +23,8 @@ class helpc(commands.Cog):
 
     @search.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def ggrks(self, ctx, a: str):
-        await ctx.send(f"http://ggrks.atspace.tv/?{a.replace("@", "＠")}")
+    async def ggrks(self, ctx, *, a):
+        await ctx.send(f"http://ggrks.atspace.tv/?{a.replace("@", "＠").replace(" ", "+")}")
 
     @search.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
