@@ -25,11 +25,12 @@ class Minecraft(commands.Cog):
     @commands.has_permissions()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def cbuild(self, ctx):
-        e = discord.Embed(title=f"Minecraftコマンドビルダー v1.0\nリアクションを付けて作ります。\n====================\n🌳..Giveコマンド\n⚔..Killコマンド\n✖..終了")
+        e = discord.Embed(title=f"Minecraftコマンドビルダー v1.0\nリアクションを付けて作ります。\n====================\n🌳..Giveコマンド\n⚔..Killコマンド\n💬..Sayコマンド\n✖..終了")
         cmds = ""
         msg = await ctx.send(embed=e)
         await msg.add_reaction("🌳")
         await msg.add_reaction("⚔")
+        await msg.add_reaction("💬")
         await msg.add_reaction("✖")
         try:
             while True:
@@ -46,14 +47,21 @@ class Minecraft(commands.Cog):
                     await ctx.send('アイテムIDを入れて')
                     numc = await self.bot.wait_for("message", check=checks, timeout=None)
                     await ctx.send("Giveコマンドを追加しました。")
-                    cmds += f"\n/give @p {numc.content.replace("@", "")}"
+                    cmds += f"\n/give @p {numc.content.replace("@", "＠").replace("\n", "")}"
                 elif r.emoji == "⚔":
                     def checks(m=ctx.message):
                         return m.author == ctx.author
                     await ctx.send('ユーザーネームを入れて')
                     numc = await self.bot.wait_for("message", check=checks, timeout=None)
                     await ctx.send("Killコマンドを追加しました。")
-                    cmds += f"\n/kill {numc.content.replace("@", "＠")}"
+                    cmds += f"\n/kill {numc.content.replace("@", "＠").replace("\n", "")}"
+                elif r.emoji == "💬":
+                    def checks(m=ctx.message):
+                        return m.author == ctx.author
+                    await ctx.send('メッセージを入れて')
+                    numc = await self.bot.wait_for("message", check=checks, timeout=None)
+                    await ctx.send("Sayコマンドを追加しました。")
+                    cmds += f"\n/say {numc.content.replace("@", "＠").replace("\n", "")}"
                 elif r.emoji == "✖":
                     await ctx.send("コードが完成しました。")
                     await ctx.send(f"```{cmds}```")

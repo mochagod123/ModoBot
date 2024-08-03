@@ -200,11 +200,14 @@ class Fun(commands.Cog):
 
     @image.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def myqu(self, ctx, a: str):
+    async def myqu(self, ctx, user: discord.User, a: str):
+        if user.id == 1206048010740432906:
+            await ctx.send("管理者のコラ画像は作成できません！")
+            return
         n = 7
         join_string = "\n"
         new_string = join_string.join([a[i:i+n] for i in range(0, len(a), n)])
-        content = requests.get(ctx.author.display_avatar)
+        content = requests.get(user.display_avatar)
         pdf_data = io.BytesIO(content.content)
         sendio = io.BytesIO()
         img = Image.open(pdf_data)
@@ -217,7 +220,7 @@ class Fun(commands.Cog):
         font = ImageFont.truetype('C:/Windows/Fonts/meiryob.ttc', 50)
         fonta = ImageFont.truetype('C:/Windows/Fonts/meiryob.ttc', 20)
         draw.text((625, 35), new_string, fill=(250, 251, 252), font=font)
-        draw.text((625, 520), ctx.author.display_name, fill=(250, 251, 252), font=fonta)
+        draw.text((625, 520), user.display_name, fill=(250, 251, 252), font=fonta)
         image1.save(sendio,format="png")
         sendio.seek(0)
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
