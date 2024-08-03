@@ -61,6 +61,8 @@ async def on_command_error(ctx, err):
         p = "\n".join([t_perm(perm) for perm in err.missing_permissions])
         embed=discord.Embed(title="あなたの権限がありません!", description=f"{p}", color=0xff0000)
         await ctx.send(embed=embed)
+    elif isinstance(err, commands.errors.MissingRequiredArgument ):
+        await ctx.send("引数が足りないよ！")
 
 @bot.event
 async def setup_hook():

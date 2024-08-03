@@ -214,6 +214,18 @@ class Global(commands.Cog):
             await ctx.send("エラー!")
 
     @globals.group()
+    @commands.is_owner()
+    async def deleteglobal(self, ctx, a: str):
+        try:
+            client = MongoClient('mongodb://localhost:27017/')
+            add_datad = {f"Name": f"{a}"}
+            client['Main']["GlobalChat"].delete_many(add_datad)
+            embed=discord.Embed(title=f"GlobalChat-Join", description=f"Botの管理者権限でグローバルチャットから全員退出させました。\nName: {a}", color=0x3acf26)
+            await ctx.send(embed=embed)
+        except:
+            await ctx.send("エラー!")
+
+    @globals.group()
     async def gclist(self, ctx, a: str):
         chid = []
         guilds = []
