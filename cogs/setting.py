@@ -43,19 +43,5 @@ class setting(commands.Cog):
         except:
             await ctx.send("エラー。")
 
-    @setting.command()
-    @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def welcome(self, ctx, text: str):
-        try:
-            client = MongoClient('mongodb://localhost:27017/')
-            add_datad = {f"MESSAGE": f"{text}", "GUILD": f"{ctx.guild.id}"}
-            client['Main']["Welcome"].delete_one(add_datad)
-            add_data = {f"MESSAGE": f"{text}", "GUILD": f"{ctx.guild.id}"}
-            client['Main']["Welcome"].insert_one(add_data)
-            embed=discord.Embed(title="ウェルカムメッセージ", description=f"「{text}」を追加しました！", color=0xa6c412)
-            await ctx.send(embed=embed)
-        except:
-            await ctx.send("エラー。")
-
 async def setup(bot):
     await bot.add_cog(setting(bot))
