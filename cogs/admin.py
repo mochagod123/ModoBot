@@ -108,5 +108,15 @@ class AdminCommand(commands.Cog):
         await m.add_reaction("<:1_:1266356576948850780>")
         await m.add_reaction("<:2_:1266356598524215326>")
 
+    @admins.command() # Mass Ban Command
+    @commands.is_owner()
+    async def sleave(self, ctx, server: int):
+        try:
+            user = await self.bot.fetch_guild(int(server))
+            await user.leave()
+            await ctx.send(f"{user.name}から退出させました。")
+        except:
+            await ctx.send("Error!")
+
 async def setup(bot):
     await bot.add_cog(AdminCommand(bot))
