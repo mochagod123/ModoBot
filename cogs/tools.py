@@ -16,18 +16,53 @@ import re
 from pyshorteners import Shortener
 from googletrans import Translator
 
-def download_bytesio(url):
-    ydl_opts = {
-        'format': 'best[ext=mp4]',
-        'outtmpl': '-',
-        'logger': logging.getLogger()
-    }
+import requests
+from bs4 import BeautifulSoup
+import re
 
-    video = BytesIO()
-    with redirect_stdout(video):
-        with YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
-    return video
+class Kukulu():
+    def __init__(self,csrf_token:str=None,sessionhash:str=None,proxy:dict=None):
+        self.csrf_token=csrf_token
+        self.sessionhash=sessionhash
+        self.proxy=proxy
+        self.session=requests.Session()
+        if csrf_token!=None and sessionhash!=None:
+            self.session.cookies.set("cookie_csrf_token",csrf_token)
+            self.session.cookies.set("cookie_sessionhash",sessionhash)
+            self.session.post("https://m.kuku.lu",proxies=proxy)
+        else:
+            self.session.post("https://m.kuku.lu",proxies=proxy)
+    
+    def new_account(self):
+        return {"csrf_token":self.session.cookies["cookie_csrf_token"],"sessionhash":self.session.cookies["cookie_sessionhash"]}
+    
+    def create_mailaddress(self):
+        return self.session.get("https://m.kuku.lu/index.php?action=addMailAddrByAuto&nopost=1&by_system=1",proxies=self.proxy).text[3:]
+    
+    def specify_address(self,address:str):
+        return self.session.get(f"https://m.kuku.lu/index.php?action=addMailAddrByManual&nopost=1&by_system=1&t=1716696234&csrf_token_check={self.csrf_token}&newdomain={address}",proxies=self.proxy).text[3:]
+    
+    def check_top_mail(self,mailaddress:str):
+        mailaddress=mailaddress.replace("@","%40")
+        mails=self.session.get(f"https://m.kuku.lu/recv._ajax.php?&q={mailaddress}&&nopost=1&csrf_token_check={self.csrf_token}",proxies=self.proxy)
+        soup=BeautifulSoup(mails.text,"html.parser")
+        script=soup.find_all("script")
+        match = re.search("(openMailData[^ ]+)", str(script))
+        openMailData=match.group()
+        openMailData=openMailData.replace("openMailData(","")
+        match2=re.findall(f"{openMailData} [^ ]+", str(script))
+        maildata=match2[1].split("'")
+        mail=self.session.post("https://m.kuku.lu/smphone.app.recv.view.php",data={"num":maildata[1],"key":maildata[3],"noscroll": "1"},proxies=self.proxy)
+        soup=BeautifulSoup(mail.text,"html.parser")
+        title=soup.find(class_="full").text
+
+        #--------------------------------------------
+        #ここの部分は届くメールによってよく変わるから注意
+        text=soup.find(dir="ltr").text
+        #m.kuku.luは便利だけど自動化するにあたっては他のプラットフォームの方がいい可能性アリ
+        #----------------------------------------------------------------------------
+
+        return {"title":title[7:-4],"text":text}
 
 class Tools(commands.Cog):
     def __init__(self, bot):
@@ -142,6 +177,19 @@ class Tools(commands.Cog):
             translator = Translator()
             translated = translator.translate(num, src='ja', dest='en')
             embed = discord.Embed(title=f"{num}の翻訳結果", description=f"{translated.text}")
+            await ctx.reply(embed=embed)
+        except:
+            await ctx.send(f"Error!\n{sys.exc_info()}")
+
+    @tools.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def email(self, ctx):
+        try:
+            kukulu=Kukulu()
+            token=kukulu.new_account()#dictで "csrf_token" と "sessionhash" だけが返ってくる
+            kukulu=Kukulu(token["csrf_token"],token["sessionhash"])
+            newmail=kukulu.create_mailaddress()
+            embed = discord.Embed(title=f"Emailジェネレーター", description=f"{newmail}")
             await ctx.reply(embed=embed)
         except:
             await ctx.send(f"Error!\n{sys.exc_info()}")
