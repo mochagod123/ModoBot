@@ -194,5 +194,20 @@ class Tools(commands.Cog):
         except:
             await ctx.send(f"Error!\n{sys.exc_info()}")
 
+    @tools.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def jpy(self, ctx):
+        url = 'https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=JPY&apikey=your_token'
+        raw = requests.get(url)
+        data = raw.json()
+        datetime = data["Realtime Currency Exchange Rate"]["6. Last Refreshed"]
+        USDJPY = data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
+        embed = discord.Embed(
+        title="現在のドルは何円？",
+        color=0x00ff00,
+        description="1$=" + USDJPY + "円")
+        embed.add_field(name="最終更新時間",value=datetime)
+        await ctx.send(embed=embed)
+
 async def setup(bot):
     await bot.add_cog(Tools(bot))

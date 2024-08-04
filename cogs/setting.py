@@ -20,7 +20,9 @@ class setting(commands.Cog):
                     json.dump(count, fa, indent=2)
 
             count = len(self.bot.guilds)
-            await self.bot.change_presence(activity=discord.Game(name=f"m#help | {count}鯖"))
+            raw_ping = self.bot.latency
+            ping = round(raw_ping * 1000)
+            await self.bot.change_presence(activity=discord.CustomActivity(name=f"{count}鯖 | {len(self.bot.users)}人"))
 
             await asyncio.sleep(2)
 

@@ -23,7 +23,7 @@ class AdminCommand(commands.Cog):
     @commands.cooldown(1, 10, type=commands.BucketType.user)
     @commands.is_owner()
     async def server_list(self, ctx):
-        join_servers_information = '\n'.join(f"{s.name}, {s.id}" for s in self.bot.guilds)
+        join_servers_information = '\n'.join(f"{s.name}, {s.id}, {s.member_count}人" for s in self.bot.guilds)
         embed = discord.Embed(title="導入鯖一覧", description=join_servers_information)
         await ctx.send(embed=embed)
 

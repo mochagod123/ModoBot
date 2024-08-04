@@ -39,7 +39,9 @@ async def on_ready():
     print("======================")
     print("Log >>")
     count = len(bot.guilds)
-    await bot.change_presence(activity=discord.Game(name=f"mo#help | {count}鯖"))
+    raw_ping = bot.latency
+    ping = round(raw_ping * 1000)
+    await bot.change_presence(activity=discord.CustomActivity(name=f"{count}鯖 | {len(bot.users)}人"))
     autodeletetemp.start()
 
 @bot.event
