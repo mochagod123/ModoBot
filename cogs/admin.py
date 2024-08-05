@@ -118,5 +118,51 @@ class AdminCommand(commands.Cog):
         except:
             await ctx.send("Error!")
 
+    @admins.command() # Mass Ban Command
+    @commands.is_owner()
+    async def editmoney(self, ctx, user: discord.User, money: int):
+        try:
+            client = MongoClient('mongodb://localhost:27017/')
+            for mons in client["Main"]["Money"].find():
+                if mons["IDs"] == f"{user.id}":
+                    if mons == None:
+                        add_datad = {f"IDs": f"{user.id}"}
+                        client['Main']["Money"].delete_one(add_datad)
+                        add_data = {f"IDs": f"{user.id}", f"Money": f"{money}"}
+                        client['Main']["Money"].insert_one(add_data)
+                    else:
+                        add_datad = {f"IDs": f"{user.id}"}
+                        client['Main']["Money"].delete_one(add_datad)
+                        add_data = {f"IDs": f"{user.id}", f"Money": f"{int(mons["Money"]) + money}"}
+                        client['Main']["Money"].insert_one(add_data)
+                    embed=discord.Embed(title="お金操作", description=f"{user.name}さんの所持金を「{money}」円増やしました。", color=0xffc800)
+                    await ctx.send(embed=embed)
+
+        except:
+            await ctx.send("Error!")
+
+    @admins.command() # Mass Ban Command
+    @commands.is_owner()
+    async def fine(self, ctx, user: discord.User):
+        try:
+            client = MongoClient('mongodb://localhost:27017/')
+            for mons in client["Main"]["Money"].find():
+                if mons["IDs"] == f"{user.id}":
+                    if mons == None:
+                        add_datad = {f"IDs": f"{user.id}"}
+                        client['Main']["Money"].delete_one(add_datad)
+                        add_data = {f"IDs": f"{user.id}", f"Money": f"0"}
+                        client['Main']["Money"].insert_one(add_data)
+                    else:
+                        add_datad = {f"IDs": f"{user.id}"}
+                        client['Main']["Money"].delete_one(add_datad)
+                        add_data = {f"IDs": f"{user.id}", f"Money": f"0"}
+                        client['Main']["Money"].insert_one(add_data)
+                    embed=discord.Embed(title="罰金", description=f"{user.name}さんからすべてのお金を取り上げました。", color=0xffc800)
+                    await ctx.send(embed=embed)
+
+        except:
+            await ctx.send("Error!")
+
 async def setup(bot):
     await bot.add_cog(AdminCommand(bot))
