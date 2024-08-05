@@ -179,6 +179,7 @@ class Global(commands.Cog):
         await msg.delete()
 
     @globals.group()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
     @commands.has_permissions(manage_channels=True)
     async def talkglobal(self, ctx, a: str):
         try:
@@ -226,6 +227,7 @@ class Global(commands.Cog):
             await ctx.send("エラー!")
 
     @globals.group()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def gclist(self, ctx, a: str):
         chid = []
         guilds = []
@@ -245,6 +247,7 @@ class Global(commands.Cog):
             await ctx.send("エラー!")
 
     @globals.group()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def grlist(self, ctx):
         chid = []
         try:
@@ -264,6 +267,7 @@ class Global(commands.Cog):
             await ctx.send("エラー!")
 
     @globals.group()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
     @commands.has_permissions(manage_channels=True)
     async def deactivate(self, ctx):
         try:

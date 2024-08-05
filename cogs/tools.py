@@ -15,10 +15,21 @@ from bs4 import BeautifulSoup
 import re
 from pyshorteners import Shortener
 from googletrans import Translator
+from threading import Thread
 
-import requests
-from bs4 import BeautifulSoup
-import re
+def download_bytesio(url):
+    ydl_opts = {
+        'format': 'best[ext=mp4]',
+        'outtmpl': '-',
+        'logger': logging.getLogger()
+    }
+
+    video = BytesIO()
+    with redirect_stdout(video):
+        with YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+    return video
+
 
 class Kukulu():
     def __init__(self,csrf_token:str=None,sessionhash:str=None,proxy:dict=None):
