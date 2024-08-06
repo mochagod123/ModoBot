@@ -10,6 +10,7 @@ import suddendeath
 import aiohttp
 import asyncio
 from functools import cache
+import cv2
 
 class Fun(commands.Cog):
     def __init__(self, bot):
@@ -251,6 +252,24 @@ class Fun(commands.Cog):
         sendio.seek(0)
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="Love")
+        embed.set_image(url=amsg.attachments[0].url)
+        await ctx.reply(embed=embed)
+        sendio.close()
+
+    @image.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def naguru(self, ctx, *, member: discord.Member):
+        content = requests.get(member.display_avatar)
+        pdf_data = io.BytesIO(content.content)
+        sendio = io.BytesIO()
+        img = Image.open(pdf_data)
+        image1 = Image.open("data/naguru.jpg")
+        img_resize = img.resize((67, 69))
+        image1.paste(img_resize, (65, 65))
+        image1.save(sendio,format="png")
+        sendio.seek(0)
+        amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
+        embed = discord.Embed(title="なぐる")
         embed.set_image(url=amsg.attachments[0].url)
         await ctx.reply(embed=embed)
         sendio.close()

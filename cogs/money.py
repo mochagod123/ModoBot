@@ -25,17 +25,16 @@ class MoneySystem(commands.Cog):
         client = MongoClient('mongodb://localhost:27017/')
         try:
             for mons in client["Main"]["Money"].find():
-                if mons["IDs"] == f"{ctx.author.id}":
-                    if mons == None:
-                        add_datad = {f"IDs": f"{ctx.author.id}"}
-                        client['Main']["Money"].delete_one(add_datad)
-                        add_data = {f"IDs": f"{ctx.author.id}", f"Money": f"{mon}"}
-                        client['Main']["Money"].insert_one(add_data)
-                    else:
-                        add_datad = {f"IDs": f"{ctx.author.id}"}
-                        client['Main']["Money"].delete_one(add_datad)
-                        add_data = {f"IDs": f"{ctx.author.id}", f"Money": f"{int(mons["Money"]) + mon}"}
-                        client['Main']["Money"].insert_one(add_data)
+                if not mons["IDs"] == f"{ctx.author.id}":
+                    add_datad = {f"IDs": f"{ctx.author.id}"}
+                    client['Main']["Money"].delete_one(add_datad)
+                    add_data = {f"IDs": f"{ctx.author.id}", f"Money": f"{mon}"}
+                    client['Main']["Money"].insert_one(add_data)
+                else:
+                    add_datad = {f"IDs": f"{ctx.author.id}"}
+                    client['Main']["Money"].delete_one(add_datad)
+                    add_data = {f"IDs": f"{ctx.author.id}", f"Money": f"{int(mons["Money"]) + mon}"}
+                    client['Main']["Money"].insert_one(add_data)
         except:
             await ctx.send("Error!")
         embed=discord.Embed(title="働く", description=f"「{mon}円」稼ぎました！\n現実のお金には変換できません！", color=0xffc800)
