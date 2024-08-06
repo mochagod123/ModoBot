@@ -120,7 +120,7 @@ class Fun(commands.Cog):
 
     @image.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def nikuyaki(self, ctx, *, member: discord.Member):
+    async def nikuyaki(self, ctx, *, member: discord.User):
         content = requests.get(member.display_avatar)
         pdf_data = io.BytesIO(content.content)
         sendio = io.BytesIO()
@@ -138,7 +138,7 @@ class Fun(commands.Cog):
 
     @image.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def yusha(self, ctx, *, member: discord.Member):
+    async def yusha(self, ctx, *, member: discord.User):
         content = requests.get(member.display_avatar)
         pdf_data = io.BytesIO(content.content)
         sendio = io.BytesIO()
@@ -156,7 +156,7 @@ class Fun(commands.Cog):
 
     @image.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def riaju(self, ctx, *, member: discord.Member):
+    async def riaju(self, ctx, *, member: discord.User):
         content = requests.get(member.display_avatar)
         pdf_data = io.BytesIO(content.content)
         sendio = io.BytesIO()
@@ -232,7 +232,7 @@ class Fun(commands.Cog):
 
     @image.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def love(self, ctx, *, member: discord.Member):
+    async def love(self, ctx, *, member: discord.User):
         content = requests.get(ctx.author.display_avatar)
         mb = io.BytesIO(content.content)
         contenta = requests.get(member.display_avatar)
@@ -258,7 +258,7 @@ class Fun(commands.Cog):
 
     @image.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def naguru(self, ctx, *, member: discord.Member):
+    async def naguru(self, ctx, *, member: discord.User):
         content = requests.get(member.display_avatar)
         pdf_data = io.BytesIO(content.content)
         sendio = io.BytesIO()
