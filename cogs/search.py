@@ -111,7 +111,7 @@ class helpc(commands.Cog):
             embed=discord.Embed(title="NicoNico検索", description="エラーが発生しました。\nそのような動画はありませんでした。", color=0x00ff62)
             await ctx.send(embed=embed)
         except:
-            await ctx.send(f"{sys.exc_info()}")
+            return
 
     @search.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
@@ -143,7 +143,7 @@ class helpc(commands.Cog):
                     break
             return
         except:
-            await ctx.send(f"{sys.exc_info()}")
+            return
 
     @search.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)

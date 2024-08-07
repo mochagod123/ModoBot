@@ -11,6 +11,7 @@ import aiohttp
 import asyncio
 from functools import cache
 import cv2
+import re
 
 class Fun(commands.Cog):
     def __init__(self, bot):
@@ -361,7 +362,7 @@ class Fun(commands.Cog):
     @image.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def hikakin(self, ctx):
-        list = glob.glob('C:/Users/えのしまこうや/Desktop/FireBot/data/Hikakin/*.png')
+        list = glob.glob('C:/Users/えのしまこうや/Desktop/ModoBot/data/Hikakin/*.png')
         data = random.choice(list)
         await ctx.reply(file=discord.File(data))
 

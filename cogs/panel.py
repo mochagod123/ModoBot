@@ -104,10 +104,9 @@ class Panel(commands.Cog):
                     await asyncio.sleep(3)
                     await msg.delete()
                 else:
-                    pass
+                    continue
         except:
-            channel = self.bot.get_channel(pl.channel_id)
-            await channel.send(f"{sys.exc_info()}")
+            return
 
 async def setup(bot):
     await bot.add_cog(Panel(bot))

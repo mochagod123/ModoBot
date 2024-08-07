@@ -100,33 +100,36 @@ class Global(commands.Cog):
                 chid.append(channels["IDs"])
 
         for ch in chid:
-            channel = self.bot.get_channel(int(ch))
-            if not channel.id == channelid:
-                async with aiohttp.ClientSession() as session:
-                    files = []
-                    if fileurl:
-                        u = urllib.parse.unquote(fileurl)
-                        fio = io.BytesIO()
-                        async with session.get(u) as r:
-                            fio.write(await r.read())
-                        fio.seek(0)
-                        files.append(discord.File(fio, filename=f"{filename}"))
-                        fio.close()
-                        ch_webhooks = await channel.webhooks()
-                        whname = f"ModoBot-Global-{name}"
-                        webhooks = discord.utils.get(ch_webhooks, name=whname)
-                        if webhooks is None:
-                            webhooks = await channel.create_webhook(name=f"{whname}")
-                        webhook = Webhook.from_url(webhooks.url, session=session)
-                        await webhook.send(re.sub(INVITE_PATTERN, "[Invite link]", message.replace("@", "＠")), username=f"{NameSelect(userid)}{displayname}-{userid}-{guildname}", avatar_url=f"{avatar}", files=files)
-                    else:
-                        ch_webhooks = await channel.webhooks()
-                        whname = f"ModoBot-Global-{name}"
-                        webhooks = discord.utils.get(ch_webhooks, name=whname)
-                        if webhooks is None:
-                            webhooks = await channel.create_webhook(name=f"{whname}")
-                        webhook = Webhook.from_url(webhooks.url, session=session)
-                        await webhook.send(re.sub(INVITE_PATTERN, "[Invite link]", message.replace("@", "＠")), username=f"{NameSelect(userid)}{displayname}-{userid}-{guildname}", avatar_url=f"{avatar}")
+            try:
+                channel = self.bot.get_channel(int(ch))
+                if not channel.id == channelid:
+                    async with aiohttp.ClientSession() as session:
+                        files = []
+                        if fileurl:
+                            u = urllib.parse.unquote(fileurl)
+                            fio = io.BytesIO()
+                            async with session.get(u) as r:
+                                fio.write(await r.read())
+                            fio.seek(0)
+                            files.append(discord.File(fio, filename=f"{filename}"))
+                            fio.close()
+                            ch_webhooks = await channel.webhooks()
+                            whname = f"ModoBot-Global-{name}"
+                            webhooks = discord.utils.get(ch_webhooks, name=whname)
+                            if webhooks is None:
+                                webhooks = await channel.create_webhook(name=f"{whname}")
+                            webhook = Webhook.from_url(webhooks.url, session=session)
+                            await webhook.send(re.sub(INVITE_PATTERN, "[Invite link]", message.replace("@", "＠")), username=f"{NameSelect(userid)}{displayname}-{userid}-{guildname}", avatar_url=f"{avatar}", files=files)
+                        else:
+                            ch_webhooks = await channel.webhooks()
+                            whname = f"ModoBot-Global-{name}"
+                            webhooks = discord.utils.get(ch_webhooks, name=whname)
+                            if webhooks is None:
+                                webhooks = await channel.create_webhook(name=f"{whname}")
+                            webhook = Webhook.from_url(webhooks.url, session=session)
+                            await webhook.send(re.sub(INVITE_PATTERN, "[Invite link]", message.replace("@", "＠")), username=f"{NameSelect(userid)}{displayname}-{userid}-{guildname}", avatar_url=f"{avatar}")
+            except:
+                continue
 
     async def checkgmute(self, user: discord.User):
         client = MongoClient('mongodb://localhost:27017/')
@@ -222,46 +225,6 @@ class Global(commands.Cog):
             add_datad = {f"Name": f"{a}"}
             client['Main']["GlobalChat"].delete_many(add_datad)
             embed=discord.Embed(title=f"GlobalChat-Join", description=f"Botの管理者権限でグローバルチャットから全員退出させました。\nName: {a}", color=0x3acf26)
-            await ctx.send(embed=embed)
-        except:
-            await ctx.send("エラー!")
-
-    @globals.group()
-    @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def gclist(self, ctx, a: str):
-        chid = []
-        guilds = []
-        try:
-            client = MongoClient('mongodb://localhost:27017/')
-            for channels in client["Main"]["GlobalChat"].find():
-                if channels["Name"] == a:
-                    chid.append(channels["IDs"])
-
-            for ch in chid:
-                channel = self.bot.get_channel(int(ch))
-                guilds.append(channel.guild.name)
-
-            embed = discord.Embed(title=f"{a}に参加している鯖", description=f"{"\n".join(guilds)}")
-            await ctx.send(embed=embed)
-        except:
-            await ctx.send("エラー!")
-
-    @globals.group()
-    @commands.cooldown(1, 10, type=commands.BucketType.user)
-    async def grlist(self, ctx):
-        chid = []
-        try:
-            client = MongoClient('mongodb://localhost:27017/')
-            for channels in client["Main"]["GlobalChat"].find():
-                chid.append(channels["Name"])
-
-            for i, f in enumerate(chid): # 基準となるフルーツとインデックスを取得
-                for compared_i, compared_f in enumerate(chid): # 比較対象のフルーツとインデックスを取得
-                    
-                    if i != compared_i and f == compared_f: # 両者のインデックスが同じではなく、要素が同じ場合、比較対象を削除
-                        chid.pop(i)
-
-            embed = discord.Embed(title=f"グローバルチャットの部屋リスト", description=f"{"\n".join(chid)}")
             await ctx.send(embed=embed)
         except:
             await ctx.send("エラー!")
