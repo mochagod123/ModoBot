@@ -57,7 +57,10 @@ class Global(commands.Cog):
         client = MongoClient('mongodb://localhost:27017/')
         for channels in client["Main"]["GlobalChat"].find():
             if channels["Name"] == "gban":
-                chid.append(channels["IDs"])
+                try:
+                    chid.append(channels["IDs"])
+                except:
+                    continue
 
         for ch in chid:
             channel = self.bot.get_channel(int(ch))
@@ -241,6 +244,15 @@ class Global(commands.Cog):
             await ctx.send(embed=embed)
         except:
             await ctx.send("エラー!")
+            
+    @globals.group()
+    @commands.is_owner()
+    async def msgtest(self, ctx, user: discord.User, a: int):
+        try:
+            if int == 0:
+                self.send_gban(user)
+        except:
+            await ctx.send(f"エラー!\n{sys.exc_info()}")
 
 async def setup(bot):
     await bot.add_cog(Global(bot))

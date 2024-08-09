@@ -7,6 +7,9 @@ import csv
 import sys
 import random
 import urllib.request
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
 class helpc(commands.Cog):
     def __init__(self, bot):
@@ -92,20 +95,6 @@ class helpc(commands.Cog):
 
             embed=discord.Embed(title="NicoNico検索", description=f"{rets[0].replace("@", "")}\nhttps://www.nicovideo.jp{retsa[0].replace("@", "")}", color=0x00ff62, url=f"https://www.nicovideo.jp{retsa[0].replace("@", "")}")
             msg = await ctx.send(embed=embed)
-            await msg.add_reaction("✖")
-
-            while True:
-                def check(r, u):
-                    if u.id == ctx.author.id:
-                        return r.message.id == msg.id
-                    else:
-                        return False
-                r, _ = await self.bot.wait_for("reaction_add", check=check, timeout=60)
-                await r.remove(ctx.author)
-                if r.emoji == "✖":
-                    await ctx.message.delete()
-                    await msg.delete()
-                    break
 
         except IndexError:
             embed=discord.Embed(title="NicoNico検索", description="エラーが発生しました。\nそのような動画はありませんでした。", color=0x00ff62)
@@ -127,20 +116,6 @@ class helpc(commands.Cog):
                 embed.add_field(name="Botかどうか？",value="いいえ")
             embed.set_thumbnail(url=user.avatar)
             msg = await ctx.send(embed=embed)
-            await msg.add_reaction("✖")
-
-            while True:
-                def check(r, u):
-                    if u.id == ctx.author.id:
-                        return r.message.id == msg.id
-                    else:
-                        return False
-                r, _ = await self.bot.wait_for("reaction_add", check=check, timeout=60)
-                await r.remove(ctx.author)
-                if r.emoji == "✖":
-                    await ctx.message.delete()
-                    await msg.delete()
-                    break
             return
         except:
             return

@@ -9,6 +9,28 @@ class AdminCommand(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    async def send_gban(self, userid: discord.User):
+        chid = []
+        client = MongoClient('mongodb://localhost:27017/')
+        for channels in client["Main"]["GlobalChat"].find():
+            if channels["Name"] == "gban":
+                try:
+                    chid.append(channels["IDs"])
+                except:
+                    continue
+
+        for ch in chid:
+            channel = self.bot.get_channel(int(ch))
+            async with aiohttp.ClientSession() as session:
+                ch_webhooks = await channel.webhooks()
+                whname = f"ModoBot-Global-gban"
+                webhooks = discord.utils.get(ch_webhooks, name=whname)
+                if webhooks is None:
+                    webhooks = await channel.create_webhook(name=f"{whname}")
+                webhook = Webhook.from_url(webhooks.url, session=session)
+                await webhook.send(f"「{userid.display_name}」をGBANしました。", username=f"🔨 ModoBotGBANSystem-System", avatar_url=f"https://media.discordapp.net/attachments/1265857640026603520/1267938279215333532/gbansystem.png?ex=66aa9b0a&is=66a9498a&hm=b406675ee05e38b697463b0866ba8f1146206f68519f7030b2b14222a099ffc1&=&format=webp&quality=lossless&width=434&height=468")
+
+
     @commands.group(invoke_without_command=True)
     @commands.is_owner()
     async def admins(self,ctx):

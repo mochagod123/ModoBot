@@ -28,7 +28,12 @@ class Fun(commands.Cog):
     @image.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def hunter(self, ctx):
-        await ctx.reply(file=discord.File("data/MonsterHunter/hunter.png"))
+        embed = discord.Embed(title="ハンター")
+        fname="hunter.png"
+        file = discord.File(fp="data/MonsterHunter/hunter.png",filename=fname,spoiler=False)
+        embed.set_image(url=f"attachment://{fname}")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
+        await ctx.reply(file=file, embed=embed)
 
     @image.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
@@ -46,6 +51,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="モンハンアバター")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -62,6 +68,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="進捗")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -81,6 +88,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="ろぼかす")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -97,6 +105,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="ゆうた・ふんたー")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -116,6 +125,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="なんかのドラゴン")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -134,6 +144,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="肉焼き")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -152,6 +163,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="勇者")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -170,6 +182,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="リア充の大爆発!")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -196,6 +209,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="3ds")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
         await ctx.message.delete()
@@ -228,6 +242,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="MyQU")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -254,6 +269,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="Love")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -272,6 +288,7 @@ class Fun(commands.Cog):
         amsg = await self.bot.get_channel(1265978647391633439).send(file=discord.File(sendio, filename="result.png"))
         embed = discord.Embed(title="なぐる")
         embed.set_image(url=amsg.attachments[0].url)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
         sendio.close()
 
@@ -280,6 +297,7 @@ class Fun(commands.Cog):
     async def gosenchoen(self, ctx, a: str, b: str):
         embed = discord.Embed(title="5000兆円ほしい!")
         embed.set_image(url=f"https://gsapi.cbrx.io/image?top={a}&bottom={b}")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
 
     @image.command()
@@ -290,6 +308,7 @@ class Fun(commands.Cog):
         jsonData = response.json()
         embed = discord.Embed(title="猫耳娘", color=jsonData["color"])
         embed.set_image(url=jsonData["message"])
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
 
     @image.command()
@@ -300,6 +319,7 @@ class Fun(commands.Cog):
         jsonData = response.json()
         embed = discord.Embed(title="ケモミミちゃん", color=jsonData["color"])
         embed.set_image(url=jsonData["message"])
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
 
     @image.command()
@@ -310,6 +330,7 @@ class Fun(commands.Cog):
         jsonData = response.json()
         embed = discord.Embed(title="食べ物", color=jsonData["color"])
         embed.set_image(url=jsonData["message"])
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
 
     @image.command()
@@ -320,6 +341,7 @@ class Fun(commands.Cog):
         jsonData = response.json()
         embed = discord.Embed(title="コーヒー☕", color=jsonData["color"])
         embed.set_image(url=jsonData["message"])
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         await ctx.reply(embed=embed)
 
     @image.command()
@@ -329,7 +351,19 @@ class Fun(commands.Cog):
         response = requests.get(url)
         jsonData = response.json()
         embed = discord.Embed(title="カンナちゃん", color=jsonData["color"])
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         embed.set_image(url=jsonData["message"])
+        msg = await ctx.reply(embed=embed)
+
+    @image.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def poke(self, ctx):
+        url = "https://api.waifu.pics/sfw/poke"
+        response = requests.get(url)
+        jsonData = response.json()
+        embed = discord.Embed(title="突く")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
+        embed.set_image(url=jsonData["url"])
         msg = await ctx.reply(embed=embed)
 
     @image.command()
@@ -339,6 +373,7 @@ class Fun(commands.Cog):
         response = requests.get(url)
         jsonData = response.json()
         embed = discord.Embed(title="犬")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         embed.set_image(url=jsonData["message"])
         msg = await ctx.reply(embed=embed)
 
@@ -346,6 +381,7 @@ class Fun(commands.Cog):
     @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def httpcat(self, ctx, a: str):
         embed = discord.Embed(title="HttpCat")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         embed.set_image(url=f"https://http.cat/{a}")
         msg = await ctx.reply(embed=embed)
 
@@ -356,15 +392,52 @@ class Fun(commands.Cog):
         response = requests.get(url)
         jsonData = response.json()
         embed = discord.Embed(title="きつね🦊")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
         embed.set_image(url=jsonData["image"])
         msg = await ctx.reply(embed=embed)
 
     @image.command()
     @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def nounai(self, ctx, a: str):
+        embed = discord.Embed(title="脳内メーカー")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
+        embed.set_image(url=f"https://maker.usoko.net/nounai/img/{a}.gif")
+        msg = await ctx.reply(embed=embed)
+
+    @image.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def isekai(self, ctx, a: str):
+        embed = discord.Embed(title="異世界家系図メーカー")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
+        embed.set_image(url=f"https://usokomaker.com/kakeizu_fantasy/r/img/{a}.gif")
+        msg = await ctx.reply(embed=embed)
+
+    @image.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def kabuto(self, ctx, a: str):
+        embed = discord.Embed(title=f"{a}の兜")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
+        embed.set_image(url=f"https://usokomaker.com/kabuto/img/{a}.gif")
+        msg = await ctx.reply(embed=embed)
+
+    @image.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def smartphone(self, ctx, a: str):
+        embed = discord.Embed(title=f"{a}のスマホ")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
+        embed.set_image(url=f"https://usokomaker.com/sumaho/img/{a}.gif")
+        msg = await ctx.reply(embed=embed)
+
+    @image.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def hikakin(self, ctx):
-        list = glob.glob('C:/Users/えのしまこうや/Desktop/ModoBot/data/Hikakin/*.png')
+        embed = discord.Embed(title="ヒカキン")
+        list = glob.glob('data/Hikakin/*.png')
         data = random.choice(list)
-        await ctx.reply(file=discord.File(data))
+        file=discord.File(data, filename="hikakin.png")
+        embed.set_image(url=f"attachment://hikakin.png")
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
+        await ctx.reply(file=file, embed=embed)
 
     @commands.group(invoke_without_command=True)
     async def text(self,ctx):
@@ -378,6 +451,17 @@ class Fun(commands.Cog):
     @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def suddendeath(self, ctx, a: str):
         await ctx.reply(f"```{suddendeath.suddendeathmessage(a).replace("@", "")}```")
+
+    @text.command()
+    @commands.cooldown(1, 10, type=commands.BucketType.user)
+    async def yudachat(self, ctx, a: str):
+        url = f"https://script.google.com/macros/s/AKfycbxhkPAagftxnWMP5kFa3UKOGDqtWSFUw3-g8usEXjXTnAjAg97zGq1W0zUgpXejXOk/exec?message={a}"
+        response = requests.get(url)
+        jsonData = response.json()
+        embed=discord.Embed(title="ゆだチャット", description=f"{jsonData["message"]}", color=0x800000)
+        embed.set_author(name=f"{ctx.author.display_name}", icon_url=f"{ctx.author.display_avatar}")
+        embed.set_footer(text="by YudaAPI", icon_url="https://stat.ameba.jp/user_images/20090904/04/lava7night/a1/b2/j/o0400040010246539099.jpg")
+        await ctx.reply(embed=embed)
 
 async def setup(bot):
     await bot.add_cog(Fun(bot))

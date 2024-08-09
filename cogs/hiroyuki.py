@@ -22,7 +22,7 @@ class Hiroyuki(commands.Cog):
     @commands.cooldown(1, 10, type=commands.BucketType.user)
     async def hirosay(self, ctx):
         try:
-            meigen = ["嘘を嘘と見抜けない人は、ネット掲示板を使うのは難しいでしょう", "それってあなたの感想ですよね"]
+            meigen = [f"嘘を嘘と見抜けない人は、{ctx.guild.name}を使うのは難しいでしょう", "それってあなたの感想ですよね", "日本人はモラルが高いのではなく、同調圧力に弱いだけ。", "『こういうときは、こうしておこう』というルールを先に決めます", "それって明らかではないですよね？"]
             whname = f"ModoBot-Hiroyuki"
             ch_webhooks = await ctx.channel.webhooks()
             webhooks = discord.utils.get(ch_webhooks, name=whname)
